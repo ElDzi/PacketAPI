@@ -1,62 +1,48 @@
 package com.gmail.thezaha;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.gmail.thezaha.api.TabObject;
+import com.gmail.thezaha.api.TabObject.TabManager;
 
 public class Main extends JavaPlugin {
-
+	
 //	public static void main(String[] args) {
 //	}
 	
-	private Main plugin;
-	public Main getPlugin() { return plugin; }
-	
 	@Override
 	public void onDisable() {
-		this.plugin = null;
-		TabObject.destory();
+		TabManager.destory();
 		super.onDisable();
 	}
 	@Override
 	public void onEnable() {
-		this.plugin = this;
+		TabManager.register(this);
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				customtab();
+			}
+		}.runTaskTimer(this, 3L, 3L);
 		super.onEnable();
 	}
-	
-	
-	@Override
-	public boolean onCommand (CommandSender sender, Command command,
-			String label, String[] args) {
-		if(!command.getName().equalsIgnoreCase("test")) return false;
-		Player p = (Player) sender;
-		
-		//new constructor and methods - Work In Progress, changes not have been introduced yet ...
-		
-		TabObject to = new TabObject(PacketPriority.NORMAL/*TabList Priority*/);
-		//TabObject newTabObject = new TabObject(PacketPriority.NORMAL/*TabList Priority*/, -1 /*Ping*/);
-		
-		/**add to TabList - now, expanded to more methods**/
-		to.addSlot("Slot 1")
-		to.addSlot(1,"Slot 2")
-		to.setSlot(0, "Edited Slot 1");
-		TabObject.setTab(p, to);
-		//TabObject.newSetTab(p, to);
-		
-		if(args.length == 1) {
-			if(args[0].equalsIgnoreCase("create")) {
-				TabObject.setTab(p, o);
-			}
-			else if(args[0].equalsIgnoreCase("clear")) {
-				TabObject.clearTab(p);
-			}
-			else if(args[0].equalsIgnoreCase("default")) {
-				TabObject.defaultTab(p);
-			}
+	SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss");
+	public void customtab() {
+		String data = format.format(new Date());
+		TabObject to = new TabObject();
+		to.addSlot("§2[###]", "§6Welcome §7^^  §6!", "§2[###]");
+		to.addSlot("§2[###]");
+		to.setSlot(4, "§dGodzina:§5 {H} §5:{M}:{S}".replace("{H}", data.split(":")[0]).replace("{M}", data.split(":")[1]).replace("{S}", data.split(":")[2]));
+		to.addSlot("§2[###]");
+		for(Player p : Bukkit.getServer().getOnlinePlayers()){
+			if(!TabObject.check(p)) TabObject.clear(p);
+			TabObject.update(p, to);
 		}
-		return super.onCommand(sender, command, label, args);
 	}
 }

@@ -4,4 +4,4 @@
 
 #Proste Klasy do zarzadzania TabList'ą !
 
-http://i.imgur.com/VfRjyl7.png
+![ScreenShot](http://i.imgur.com/VfRjyl7.png)

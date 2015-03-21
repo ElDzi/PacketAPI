@@ -63,3 +63,6 @@ PacketPlayOutPlayerInfo ppopi = PacketPlayOutPlayerInfo("test");
 ps.sendPacket(ppopi.getPacket(PlayerInfoType.CREATE)); //tworzy PLAYERINFO
 
 or/lub
+
+PacketPlayOutPlayerInfo ppopi = PacketPlayOutPlayerInfo("test", true, 9999);
+ps.sendPacket(ppopi.getPacket(PlayerInfoType.OTHER));

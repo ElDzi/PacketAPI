@@ -19,9 +19,9 @@ public class PacketPlayOutEntityDestroy {
 	
 	public Object getPacket() {
 		Object packet = null;
-			try {
-				packet = classpacket.getConstructor(int[].class).newInstance(this.id);
-			} catch (Exception e) { e.printStackTrace(); }
+		try {
+			packet = classpacket.getConstructor(int[].class).newInstance(this.id);
+		} catch (Exception e) { e.printStackTrace(); }
 		return packet;
 	}
 }

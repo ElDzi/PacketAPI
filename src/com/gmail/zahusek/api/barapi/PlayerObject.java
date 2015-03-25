@@ -9,11 +9,13 @@ public class PlayerObject {
 	private String name;
 	private Object datawatcher;
 	private int id;
+	private BarObject bo;
 
 	public PlayerObject(String name, int id, Object datawatcher) {
 		this.name = name;
 		this.id = id;
 		this.datawatcher = datawatcher;
+		this.bo = null;
 		list.add(this);
 	}
 	
@@ -28,6 +30,12 @@ public class PlayerObject {
 	}
 	public int getID() {
 		return this.id;
+	}
+	public BarObject getBarObject() {
+		return this.bo;
+	}
+	public void setBarObject(BarObject bo) {
+		this.bo = bo;
 	}
 	public static PlayerObject getPlayer(String name) {
 		for(PlayerObject po : list) if(po.getName().equals(name)) return po;

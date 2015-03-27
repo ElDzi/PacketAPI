@@ -112,11 +112,33 @@ public class ParticleObject {
 	public int getAmount() {
 		return this.a;
 	}
-	public void update(Player p, ParticleObject o) {
+	public static void update(Player p, ParticleObject o) {
 		PacketSend ps = new PacketSend(p);
 		Location l = o.getLocation();
 		PacketPlayOutWorldParticles ppowp = new PacketPlayOutWorldParticles(o.getEffect(), (float)l.getX(), (float)l.getY(), (float)l.getZ(), o.getOX(), o.getOY(), o.getOZ(), o.getSpeed(), o.getAmount());
 		ps.sendPacket(ppowp.getPacket());
 	}
-
+	/*
+	 * Informacja dot.  ox, oy, oz:
+	 * Określa wielkość obszaru na którym maja pojawic sie cząsteczki.
+	 * 
+	 * WAŻNE!
+	 * 
+	 * Wyjątek: Jeżeli EFFEKT jest "reddust", "mobSpell" bądz "mobSpellAmbient"
+	 * i liczba czasteczek (zmienna "amount" - a) wynosi "0", to zmienne ox, oy, oz staja sie wyzmacznikami kolorow RGB.
+	 * Na przykład, w "reddust", 0 0 0 daje czerwone cząsteczki -1 1 0 daje zielony cząsteczki.
+	 * 0 0 1 wytwarza się purpurowe cząsteczki, itd z "mobSpell" lub "mobSpellAmbient", 0 0 0 produkuje czarną cząsteczkę,
+	 * 0 1 0 daje zielony cząstkę, 0 0 0.5 wytwarza granatową cząstek, itp.
+	 * 
+	 * UWAGA !
+	 * 
+	 * Jeśli szybkośc rozpraszania sie czasteczek (zmienna "speed" - s) jest większa niż 0, kolory stają sie losowe.
+	 */
+	
+	/**
+	 * Wiecej szczególowych informacji znajdziesz tutaj:
+	 * - http://minecraft.gamepedia.com/Commands#particle
+	 * - http://minecraft.gamepedia.com/Particles
+	 **/
 }
+
